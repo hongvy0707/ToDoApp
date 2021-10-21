@@ -3,10 +3,12 @@ import Textfield from "@atlaskit/textfield";
 import Button from "@atlaskit/button";
 import { useCallback, useState, useEffect } from "react";
 import { v4 } from "uuid";
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 const TODO_APP_STORAGE_KEY = "TODO_APP";
 
 function App() {
+  const [selectedDate, setSelectedDate] = useState(null);
   const [todoList, setTodoList] = useState([]);
   const [textInput, setTextInput] = useState("");
 
@@ -53,13 +55,17 @@ function App() {
         name='add-todo'
         placeholder='Thêm việc cần làm...'
         elemAfterInput={
-          <Button
+          <><DatePicker
+            selected={selectedDate}
+            onChange={date => setSelectedDate(date)}
+            dateFormat="dd/MM/yyyy"
+          ></DatePicker><Button
             isDisabled={!textInput}
             appearance='primary'
             onClick={onAddBtnClick}
           >
-            Thêm
-          </Button>
+              Thêm
+            </Button></>
         }
         css={{ padding: "2px 4px 2px" }}
         value={textInput}
